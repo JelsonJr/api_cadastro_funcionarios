@@ -1,7 +1,7 @@
 import express from "express";
 import { router } from "./router";
 
-export class App{
+export class App {
   public server: express.Application;
 
   constructor(){
