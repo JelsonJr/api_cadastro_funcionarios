@@ -1,20 +1,23 @@
 import express from "express";
-import { router } from "./router";
-
+import { router } from "./routes/router";
 export class App {
-  public server: express.Application;
+  private _server: express.Application;
 
-  constructor(){
-    this.server = express();
+  constructor() {
+    this._server = express();
     this.middleware();
     this.router();
   }
 
-  private middleware(){
+  private middleware() {
     this.server.use(express.json());
   }
 
-  private router(){
+  private router() {
     this.server.use(router);
+  }
+
+  public get server() {
+    return this._server;
   }
 }
