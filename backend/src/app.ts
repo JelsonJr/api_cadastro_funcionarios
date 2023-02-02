@@ -1,5 +1,5 @@
 import express from "express";
-import { router } from "./routes/router";
+import { router } from "./routes";
 export class App {
   private _server: express.Application;
 

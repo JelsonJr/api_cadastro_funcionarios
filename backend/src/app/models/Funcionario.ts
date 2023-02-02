@@ -1,4 +1,3 @@
-import { Double } from "mongodb";
 import { model, Schema } from "mongoose";
 import IFuncionario from "./interfaces/IFuncionario";
 
@@ -16,7 +15,7 @@ const funcionarioSchema = new Schema<IFuncionario>({
         required: true
     },
     salario: {
-        type: Double,
+        type: Number,
         required: true
     },
     situacao: {

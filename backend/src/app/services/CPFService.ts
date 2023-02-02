@@ -1,11 +1,26 @@
 class CPFService {
 
     public verificaCPF(cpf: string) {
-        let mensagem = 'CPF inválido!'
-        if (!this.ehUmCPF(cpf)) return { erro: `${mensagem} Número de caracteres inválidos!`, invalido: true };
+        let mensagem = 'CPF inválido!';
 
-        if (this.validaNumerosRepetidos(cpf)) return { erro: `${mensagem} Não existe CPF com números repetidos!`, invalido: true };
+        if (!this.ehUmCPF(cpf))
+            return { erro: `${mensagem} Número de caracteres inválidos!`, invalido: true };
 
+        if (this.validaNumerosRepetidos(cpf))
+            return { erro: `${mensagem} Não existe CPF com números repetidos!`, invalido: true };
+
+        if (this.validaPrimeiroDigito(cpf) && this.validaSegundoDigito(cpf)) 
+            return { erro: mensagem, invalido: true };
+
+        return { mensagem: 'CPF válido!', invalido: false };
+    }
+
+    private validaPrimeiroDigito(cpf: string): Boolean {
+        return false;
+    }
+
+    private validaSegundoDigito(cpf: string): Boolean {
+        return false;
     }
 
     private ehUmCPF(cpf: string): Boolean {
@@ -30,10 +45,6 @@ class CPFService {
         ]
 
         return numerosRepetidos.includes(cpf);
-    }
-
-    private validaPrimeiroDigito(cpf: string): Boolean {
-        return false;
     }
 }
 

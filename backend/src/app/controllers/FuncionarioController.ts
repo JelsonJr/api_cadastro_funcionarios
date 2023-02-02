@@ -3,8 +3,15 @@ import { Funcionario } from "../models/Funcionario";
 import { ValidaCPF } from "../services/CPFService";
 class FuncionarioController {
 
-    public list(req: Request, res: Response) {
-        return res.json({ msg: 'Olá mundo' });
+    public async list(req: Request, res: Response) {
+        const funcionarios = await Funcionario.find();
+        if (!funcionarios)
+            return res.status(500).json({
+                erro: 'Não foi possível fazer a busca dos funcionários',
+                success: false
+            });
+
+        return res.status(200).json({ funcionarios });
     }
 
     public async cadastrar(req: Request, res: Response) {
@@ -31,3 +38,5 @@ class FuncionarioController {
     }
 
 }
+
+export const funcionarioController = new FuncionarioController();
