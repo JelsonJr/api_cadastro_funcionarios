@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { Funcionario } from "../models/Funcionario";
-import { ValidaCPF } from "../services/CPFService";
+import { ValidaCPF } from "../utils/CPFValidator";
+import { validaErro } from "../utils/ErrorValidator";
 class FuncionarioController {
-
     public async list(req: Request, res: Response) {
         const funcionarios = await Funcionario.find({ situacao: true });
         if (!funcionarios)
@@ -15,13 +15,8 @@ class FuncionarioController {
     }
 
     public async cadastrar(req: Request, res: Response) {
-        if (!req.body)
-            return res.status(400).json({ 
-                erro: 'É necessário preenchimento dos campos para cadastro', 
-                success: false 
-            });
-        
         //validar digitos do cpf
+        //validar caso nao venha req.body
         const cpf = ValidaCPF.verificaCPF(req.body.cpf);
         if (cpf.invalido) return res.status(400).json({ erro: cpf.erro, success: false });
 
@@ -38,10 +33,10 @@ class FuncionarioController {
         try {
             await Funcionario.create(funcionario);
             return res.status(200).json({ msg: 'Funcionário cadastrado com sucesso!', success: true });
-        } catch (erro: any){
-            //ajustar todos os possíveis erros
-            return res.status(500).json({
-                erro: `Não foi possível cadastrar o funcionário, erro: ${erro.name}`,
+        } catch (erro: any) {
+            const resposta = validaErro(erro);
+            return res.status(resposta.status).json({
+                erro: resposta.mensagem,
                 success: false
             });
         }
