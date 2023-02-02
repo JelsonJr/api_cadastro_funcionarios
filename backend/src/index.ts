@@ -4,5 +4,5 @@ import { config } from "./app/config/config";
 
 new App().server.listen(config.port, () => {
     connection();
-    console.log('Server start at port:', config.port);
+    console.log('Server started on port:', config.port);
 });
