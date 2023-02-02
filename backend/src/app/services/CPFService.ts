@@ -16,6 +16,16 @@ class CPFService {
     }
 
     private validaPrimeiroDigito(cpf: string): Boolean {
+        // const cpf_numeros: Number = parseInt(cpf.replace(/\.|-/g, ""));
+        
+        // let soma = 0;
+        // let multiplicador = 10;
+    
+        // for (let tamanho = 0; tamanho < 9; tamanho++) {
+        //     soma += cpf_numeros[tamanho] * multiplicador;
+        //     multiplicador--
+        // }
+        
         return false;
     }
 
@@ -31,6 +41,7 @@ class CPFService {
     }
 
     private validaNumerosRepetidos(cpf: string): Boolean {
+        const cpf_numeros = cpf.replace(/\.|-/g, "");
         const numerosRepetidos = [
             '00000000000',
             '11111111111',
@@ -44,7 +55,7 @@ class CPFService {
             '99999999999'
         ]
 
-        return numerosRepetidos.includes(cpf);
+        return numerosRepetidos.includes(cpf_numeros);
     }
 }
 
