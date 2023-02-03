@@ -53,7 +53,7 @@ class FuncionarioController {
         const funcionarios = await Funcionario.find({ situacao: true })
             .limit(req.body.limit || 10)
             .skip(req.body.skip || 0);
-            
+
         if (!funcionarios || funcionarios === null)
             return res.status(500).json({
                 erro: 'Não foi possível fazer a busca dos funcionários',
@@ -76,16 +76,16 @@ class FuncionarioController {
                         erro: cpf_verificado.erro,
                         success: false,
                     });
-                
+
                 funcionario = await Funcionario.findOne({ cpf: req.body.cpf.replace(/\.|-/g, "") });
             }
 
-            if (funcionario === null) 
+            if (funcionario === null)
                 return res.status(404).json({
                     erro: "Funcionário não encontrado",
                     success: false,
                 });
-            
+
             return res.status(200).json({ funcionario, success: true });
         } catch (erro: any) {
             const resposta = validaErro(erro);
