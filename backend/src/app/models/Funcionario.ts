@@ -4,19 +4,22 @@ import IFuncionario from "./interfaces/IFuncionario";
 const funcionarioSchema = new Schema<IFuncionario>({
     nome: {
         type: String,
-        required: true
+        required: true,
+        minlength: 3,
     },
     cargo: {
         type: String,
-        required: true
+        required: true,
+        minlength: 3
     },
     cpf: {
         type: String,
-        required: true
+        required: true,
+        length: 11
     },
     salario: {
         type: Number,
-        required: true
+        required: true,
     },
     situacao: {
         type: Boolean,

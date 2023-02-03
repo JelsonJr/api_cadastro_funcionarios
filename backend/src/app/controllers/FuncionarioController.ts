@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { Funcionario } from "../models/Funcionario";
-import { ValidaCPF } from "../utils/CPFValidator";
+import { verificaCPF } from "../utils/CPFValidator";
 import { validaErro } from "../utils/ErrorValidator";
+
 class FuncionarioController {
     public async list(req: Request, res: Response) {
         const funcionarios = await Funcionario.find({ situacao: true });
@@ -15,17 +16,17 @@ class FuncionarioController {
     }
 
     public async cadastrar(req: Request, res: Response) {
-        //validar digitos do cpf
-        //validar caso nao venha req.body
-        const cpf = ValidaCPF.verificaCPF(req.body.cpf);
-        if (cpf.invalido) return res.status(400).json({ erro: cpf.erro, success: false });
+        const cpf_verificado = verificaCPF(req.body.cpf);
+        if (cpf_verificado.invalido) return res.status(400).json({ erro: cpf_verificado.erro, success: false });
 
-        const existeCadastro = await Funcionario.findOne({ cpf: req.body.cpf });
+        const cpf = req.body.cpf.replace(/\.|-/g, "");
+        const existeCadastro = await Funcionario.findOne({ cpf });
+        
         if (existeCadastro) return res.status(400).json({ erro: 'Funcionário já cadastrado', success: false });
 
         const funcionario = {
             nome: req.body.nome,
-            cpf: req.body.cpf,
+            cpf: cpf,
             cargo: req.body.cargo,
             salario: req.body.salario >= 0 ? req.body.salario : 0.0,
         }
