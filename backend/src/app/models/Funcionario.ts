@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import IFuncionario from "./interfaces/IFuncionario";
+import salarioValidator from "./interfaces/ISalario";
 
 const funcionarioSchema = new Schema<IFuncionario>({
     nome: {
@@ -20,6 +21,7 @@ const funcionarioSchema = new Schema<IFuncionario>({
     salario: {
         type: Number,
         required: true,
+        validate: salarioValidator
     },
     situacao: {
         type: Boolean,
