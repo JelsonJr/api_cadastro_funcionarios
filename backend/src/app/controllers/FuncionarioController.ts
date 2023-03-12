@@ -97,7 +97,7 @@ class FuncionarioController {
     }
 
     public async desativaFuncionario(req: Request, res: Response) {
-        console.log(req.body.cpf)
+        console.log(req.body.cpf);
     }
 }
 
